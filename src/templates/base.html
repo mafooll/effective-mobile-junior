@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="barter, exchange, items, swap" />
+    <meta name="description"
+          content="Barter Platform - обмен вещами между пользователями" />
+    <title>
+      {% block title %}
+        Barter Platform
+      {% endblock title %}
+    </title>
+    {% load static django_bootstrap5 %}
+    {% bootstrap_css %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    {% include "includes/navbar.html" %}
+    <main class="py-4" role="main" tabindex="-1">
+      <div class="container mt-3"
+           role="alert"
+           aria-live="assertive"
+           aria-atomic="true">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show"
+                 role="alert">
+              {{ message }}
+              <button type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      {% block content %}
+      {% endblock content %}
+    </main>
+    {% bootstrap_javascript %}
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

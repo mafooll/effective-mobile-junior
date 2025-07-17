@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block content %}
+  <div class="container mt-4">
+    <h1 class="mb-4">Exchange Proposals</h1>
+    {% if proposals %}
+      <div class="table-responsive shadow-sm">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Comment</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in proposals %}
+              <tr>
+                <td>{{ p.id }}</td>
+                <td>
+                  <a href="{% url 'ads:ad_detail' p.ad_sender.pk %}">{{ p.ad_sender.title }}</a>
+                </td>
+                <td>
+                  <a href="{% url 'ads:ad_detail' p.ad_receiver.pk %}">{{ p.ad_receiver.title }}</a>
+                </td>
+                <td>{{ p.comment|default:"—" |truncatechars:50 }}</td>
+                <td>
+                  <span class="badge {% if p.status == 'pending' %}bg-warning text-dark {% elif p.status == 'accepted' %}bg-success {% elif p.status == 'rejected' %}bg-danger {% endif %}">
+                    {{ p.get_status_display }}
+                  </span>
+                </td>
+                <td>{{ p.created_at|date:"M d, Y" }}</td>
+                <td>
+                  {% if user == p.ad_receiver.user and p.status == 'pending' %}
+                    <form method="post"
+                          action="{% url 'ads:proposal_accept' p.pk %}"
+                          style="display:inline">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-outline-success">Accept</button>
+                    </form>
+                    <form method="post"
+                          action="{% url 'ads:proposal_reject' p.pk %}"
+                          style="display:inline">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-outline-danger">Reject</button>
+                    </form>
+                  {% else %}
+                    —
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>No proposals found.</p>
+    {% endif %}
+    <div class="mt-4">
+      <a href="{% url 'ads:proposal_create' %}"
+         class="btn btn-success fixed-btn">Create Proposal</a>
+    </div>
+  </div>
+{% endblock content %}

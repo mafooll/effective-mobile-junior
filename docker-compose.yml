@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    container_name: barter-platform-web
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings
+      PYTHONUNBUFFERED: '1'
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  db:
+    image: postgres:16
+    container_name: barter-platform-db
+    environment:
+      POSTGRES_DB: barter_db
+      POSTGRES_USER: barter_user
+      POSTGRES_PASSWORD: barter_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+volumes:
+  pg_data:

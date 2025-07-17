@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block title %}
+  {% if ad %}
+    Edit Ad
+  {% else %}
+    Create Ad
+  {% endif %}
+{% endblock title %}
+{% block content %}
+  <div class="container mt-4">
+    <h1 class="mb-4">
+      {% if ad %}
+        Edit
+      {% else %}
+        Create
+      {% endif %}
+      Ad
+    </h1>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <button type="submit" class="btn btn-primary mt-3">Save</button>
+      <a href="{% url 'ads:ad_list' %}" class="btn btn-secondary mt-3 ms-2">Cancel</a>
+    </form>
+  </div>
+{% endblock content %}

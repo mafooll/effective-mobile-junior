@@ -1,0 +1,28 @@
+[project]
+name = "effective-mobile-junior"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "black>=25.1.0",
+    "django>=5.2.4",
+    "django-bootstrap5>=25.1",
+    "django-environ>=0.12.0",
+    "django-filter>=25.1",
+    "djangorestframework>=3.16.0",
+    "djangorestframework-simplejwt>=5.5.0",
+    "djlint>=1.36.4",
+    "drf-spectacular>=0.28.0",
+    "drf-spectacular-sidecar>=2025.7.1",
+    "isort>=6.0.1",
+    "pre-commit>=4.2.0",
+    "psycopg2-binary>=2.9.10",
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
+    "pytest-django>=4.11.1",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+pythonpath = "src"
