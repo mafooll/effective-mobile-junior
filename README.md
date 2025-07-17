@@ -24,8 +24,8 @@ git clone https://github.com/mafooll/effective-mobile-junior.git &&
 cd effective-mobile-junior &&
 cp .env.example ./.env &&
 make makemigrations &&
-make migrate && make
-createsuperuser &&
+make migrate &&
+make createsuperuser &&
 make
 ```
 
